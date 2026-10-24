@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>دليل المقابلة الميدانية - مسار الأسئلة السريعة</title>
+  
+  <!-- استدعاء خط اليمامة Alyamama من قوقل فونتس -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alyamama:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #061c16;
+      --card-bg: #0b2e25;
+      --card-sub: #123d32;
+      --card-border: #1d5b4b;
+      --primary: #10b981;
+      --primary-hover: #059669;
+      --accent: #f59e0b;
+      --success: #34d399;
+      --danger: #f87171;
+      --text: #f0fdf4;
+      --text-muted: #a7f3d0;
+      --radius: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Alyamama', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 16px;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    /* الشريط العلوي الثابت للمؤقت ومتابعة الإنجاز */
+    .top-bar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(6, 28, 22, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--card-border);
+      margin: -16px -16px 20px -16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .hud-badge {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 13.5px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .timer-badge {
+      font-family: monospace;
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--accent);
+      background: rgba(245, 158, 11, 0.1);
+      border-color: rgba(245, 158, 11, 0.3);
+    }
+
+    .btn-timer {
+      background: #123d32;
+      color: #fff;
+      border: 1px solid var(--card-border);
+      padding: 4px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .main-container {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* كروت المراحل المفتوحة مباشرة */
+    .section-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 16px 18px;
+    }
+
+    .section-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-tag {
+      font-size: 12px;
+      color: var(--accent);
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    /* بنك الأسئلة المباشرة مع التشيك بوكس */
+    .q-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .q-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      background: var(--card-sub);
+      border: 1px solid rgba(29, 91, 75, 0.6);
+      padding: 10px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .q-item:hover {
+      border-color: var(--primary);
+      background: #164a3d;
+    }
+
+    .q-item.checked-done {
+      opacity: 0.55;
+      text-decoration: line-through;
+      border-color: var(--success);
+      background: #09241d;
+    }
+
+    .q-checkbox {
+      width: 19px;
+      height: 19px;
+      accent-color: var(--primary);
+      cursor: pointer;
+      margin-top: 3px;
+      flex-shrink: 0;
+    }
+
+    .q-text {
+      font-size: 14.5px;
+      color: #fff;
+      font-weight: 500;
+      flex: 1;
+      line-height: 1.5;
+    }
+
+    .q-sub {
+      margin-right: 22px;
+      border-right: 2px dashed rgba(16, 185, 129, 0.4);
+      padding-right: 10px;
+      background: rgba(18, 61, 50, 0.6);
+      border-left: none;
+    }
+
+    .sub-head {
+      font-size: 12.5px;
+      font-weight: 750;
+      color: var(--accent);
+      margin: 8px 0 4px;
+      padding-right: 8px;
+    }
+
+    /* بطاقة البيانات الديموغرافية السريعة أسفل الصفحة */
+    .demographics-card {
+      background: #07231b;
+      border: 2px solid var(--primary);
+      border-radius: var(--radius);
+      padding: 18px;
+      margin-top: 20px;
+    }
+
+    .chips-group {
+      margin-bottom: 12px;
+    }
+
+    .chips-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .chips-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .chip {
+      background: var(--card-sub);
+      border: 1px solid var(--card-border);
+      color: #e2e8f0;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.2s;
+    }
+
+    .chip.selected {
+      background: var(--primary) !important;
+      border-color: var(--success) !important;
+      color: #061c16 !important;
+      font-weight: 800 !important;
+    }
+
+    /* أزرار الحفظ الخاصة بالبيانات الديموغرافية */
+    .demo-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn-save-demo {
+      flex: 1;
+      min-width: 180px;
+      background: var(--card-sub);
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      padding: 11px 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+
+    .btn-save-demo:hover {
+      background: var(--primary);
+      color: #061c16;
+    }
+
+    .finish-btn {
+      width: 100%;
+      background: var(--primary);
+      color: #061c16;
+      border: none;
+      padding: 14px;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: 900;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: opacity 0.2s;
+    }
+
+    .finish-btn:hover {
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- شريط المتابعة العلوي الثابت -->
+  <header class="top-bar">
+    <div style="font-weight:800; color:var(--text); font-size:15px;">
+      🎙️ مقابلة البحث النوعي (دليل الأسئلة الشامل)
+    </div>
+    <div style="display:flex; gap:10px; align-items:center;">
+      <div class="hud-badge timer-badge">
+        ⏱️ <span id="callTimer">00:00</span>
+        <button class="btn-timer" id="toggleTimerBtn" onclick="toggleTimer()">ابدأ</button>
+        <button class="btn-timer" onclick="resetTimer()">تصفير</button>
+      </div>
+      <div class="hud-badge">
+        📊 الإنجاز: <span id="progressCount" style="color:var(--primary); font-weight:800; margin-right:4px;">0 / 36</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-container">
+
+    <!-- المحور 0: الترحيب والتهيئة وكسر الجليد -->
+    <div class="section-card">
+      <div class="section-title">🌱 أولاً: الترحيب وكسر الجليد والتمهيد (5 - 8 دقائق)</div>
+      <div class="section-tag">الهدف: جعله يسولف بأريحية تامة وتأكيد سرية البيانات وغياب الصح والخطأ</div>
+      <div class="q-list">
+        <label class="q-item">
+          <input type="checkbox" class="q-checkbox" onchange="toggleItem(this)">
+          <span class="q-text">يا هلا والله ومسهلا، كيف حالك وأمورك عساك طيب ومرتاح؟</span>
+        </label>
+        <label class="q-item">
+          <input type="checkbox" class="q-checkbox" onchange="toggleItem(this)">
+          <span class="q-text">سالفة بسيطة وممتعة كلنا نمر فيها يومياً، ولا فيه صح وخطأ، ودنا نسمع راحتك وتجربتك التامة.</span>
+        </label>
+        <label class="q-item">
+          <input type="checkbox" class="q-checkbox" onchange="toggleItem(this)">
+          <span class="q-text">بشكل عام، كم ساعة تحس يومك يروح على الجوال والتطبيقات؟</span>
+        </label>
+        <label class="q-item">
+          <input type="checkbox" class="q-checkbox" onchange="toggleItem(this)">
+          <span class="q-text">وش أكثر التطبيقات اللي تاخذ وقتك؟ (تيك توك، تويتر/إكس، يوتيوب، إنستقرام، سناب؟)</span>
+        </label>
+        <label class="q-item">
+          <input type="checkbox" class="q-checkbox" onchange="toggleItem(this)">
+          <span class="q-text">هل تحس المحتوى والإعلانات المقترحة الحين تجي على ذوقك بالمقاس أو عشوائية؟</span>
+        </label>
+        <label class="q-item">
+          <input type="checkbox" class="q-checkbox" onchange="toggleItem(this)">
+          <span class="q-text">بحكم استخدامك.. كيف تتوقع التطبيق يختار وش يعرض لك بالضبط؟ وش الآلية برأيك؟</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- المحور 1: الموقف الجوهري (الفكرة في الخاطر فقط) -->
+    <div class="section-card">
+      <div class="section-title">⚡ ثانياً: الموقف الجوهري (فكرة بالخاطر دون بحث أو حديث) (15 دقيقة)</div>
+      <div class="section-tag">صلب البحث: التأكد التام من استبعاد البحث الصوتي، الشات، والكتابة</div>
+      <div class="q-list">
+        <label class="q-item" style="border-color: var(--accent);">
+          <input type="checkbox" class="q-checkbox" onchange="toggleItem(this)">
+          <span class="q-text" style="color:var(--accent); font-weight:700;">هل قد طرى ببالك شي وفكرت فيه بينك وبين نفسك—ما بحثت بقوقل، ما كتبته، ولا تكلمت بصوت—وفجأة لقيته طالع بوجهك؟</span>
+        </label>
+
+        <div class="sub-head">🟢 في حال قال (نعم، حصل معي) — فكك الموقف معه:</div>
+        <label class="q-item q-sub">
+          <input type="checkbox" class="q-checkbox" onchange="toggleItem(this)">
+          <span class="q-text">وش كان الشيء بالضبط؟ (منتج، سالفة قديمة، سفر، شخص، نوع أكل أو سيارة؟)</span>
+        </label>
+        <label class="q-item q-sub">
+          <input type="checkbox" class="q-checkbox" onchange="toggleItem(this)">
+          <span class="q-text">تأكد معي زين: متأكد 100% إنك ما بحثت عنه بالمتجر أو قوقل نهائياً؟</span>
+        </label>
+        <label class="q-item q-sub">
+          <input type="checkbox" class="q-checkbox" onchange="toggleItem(this)">
+          <span class="q-text">هل كتبته بأي محادثة بالواتساب أو رسالة لأحد؟</span>
+        </label>
+        <label class="q-item q-sub">
+          <input type="checkbox" class="q-checkbox" onchange="toggleItem(this)">
+          <span class="q-text">هل تلفظت به بصوتك أو قاله شخص بجنبك والجوال شغال؟</span>
+        </label>
+        <label class="q-item q-sub">
+          <input type="checkbox" class="q-checkbox" onchange="toggleItem(this)">
+          <span class="q-text">بأي برنامج طلع لك الإعلان أو المحتوى؟ وكم قعد وقت من فكرت فيه لين طلع لك؟</span>
+        </label>
+        <label class="q-item q-sub">
+          <input type="checkbox" class="q-checkbox" onchange="toggleItem(this)">
+          <span class="q-text">يوم شفته طالع بوجهك.. وش أول كلمة أو فكرة قفزت لراسك بذيك اللحظة؟</span>
+        </label>
+
+        <div class="sub-head">🔴 في حال قال (لا، ما أذكر / ما صار) — اسحب تجارب المحيطين:</div>
+        <label class="q-item q-sub">
+          <input type="checkbox" class="q-checkbox" onchange="toggleItem(this)">
+          <span class="q-text">هل سمعت أحد من أصحابك أو أهلك يحلف ويقول "والله بس فكرت فيه وطلع لي"؟</span>
+        </label>
+        <label class="q-item q-sub">
+          <input type="checkbox" class="q-checkbox" onchange="toggleItem(this)">
+          <span class="q-text">لما تسمعهم، هل تقتنع بكلامهم وتصدقهم؟ ولا تقول أكيد بحثوا ونسيوا؟</span>
+        </label>
+        <label class="q-item q-sub">
+          <input type="checkbox" class="q-checkbox" onchange="toggleItem(this)">
+          <span class="q-text">وش أغرب موقف شفته بالجوال وخلاك تشك إنه يعرف عنك أشياء أكثر من اللازم؟</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- المحور 2: التفسير التلقائي وآلية الحدوث -->
+    <div class="section-card">
+      <div class="section-title">🧠 ثالثاً: استنطاق التفسير التلقائي (أهم محطة - لا تقترح عليه) (10 دقائق)</div>
+      <div class="section-tag">الهدف: معرفة الآلية التي صاغها عقله لتفسير الظاهرة دون توجيه منك</div>
+      <div class="q-list">
+        <label class="q-item">
+          <input type="checkbox" class="q-checkbox" onchange="toggleItem(this)">
+          <span class="q-text">وش الآلية اللي برأيك خلت هالشيء يصير؟ كيف وصل هذا لـ هذا؟</span>
+        </label>
+        <label class="q-item">
+          <input type="checkbox" class="q-checkbox" onchange="toggleItem(this)">
+          <span class="q-text">لو جاك خويك وقال مستحيل شلون يطلع وأنت ما تكلمت ولا بحثت.. وش تبي تقول له وتفسر له؟</span>
+        </label>
+        <label class="q-item">
+          <input type="checkbox" class="q-checkbox" onchange="toggleItem(this)">
+          <span class="q-text">برأيك وش اللي صار بين اللحظة اللي فكرت فيها ولحظة ما طلع المحتوى في جوالك؟</span>
+        </label>
+        <label class="q-item">
+          <input type="checkbox" class="q-checkbox" onchange="toggleItem(this)">
+          <span class="q-text">بعقلك، مين المسؤول عن هالشيء؟ صدفة بحتة؟ خوارزمية ذكية؟ تنصت؟ ولا شيء ثاني؟</span>
+        </label>
+        <label class="q-item">
+          <input type="checkbox" class="q-checkbox" onchange="toggleItem(this)">
+          <span class="q-text">كلامك وتفسيرك هذا.. من وين حسيت إنه جاك؟ تجارب شخصية؟ مقاطع بتيك توك وتويتر؟ ولا سوالف أصحاب؟</span>
+        </label>
+        <label class="q-item">
+          <input type="checkbox" class="q-checkbox" onchange="toggleItem(this)">
+          <span class="q-text">لو سألتك على ميزان: من (شاك ومتردد تماماً) إلى (متأكد 100%).. وين تشوف نفسك؟</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- المحور 3: قدرات الشركات وحدودها التقنية -->
+    <div class="section-card">
+      <div class="section-title">🏢 رابعاً: قدرات الشركات التقنية وحدودها (8 دقائق)</div>
+      <div class="section-tag">استكشاف نظرته لما تعرفه التطبيقات عنه وما تعجز عنه</div>
+      <div class="q-list">
+        <label class="q-item">
+          <input type="checkbox" class="q-checkbox" onchange="toggleItem(this)">
+          <span class="q-text">شركات التطبيقات هذي.. وش تعتقد تقدر تعرف عنك بالضبط؟</span>
+        </label>
+        <label class="q-item">
+          <input type="checkbox" class="q-checkbox" onchange="toggleItem(this)">
+          <span class="q-text">وش الأشياء اللي مستحيل يقدرون يوصلون لها أو يعرفونها عنك مهما تطوروا؟</span>
+        </label>
+        <label class="q-item">
+          <input type="checkbox" class="q-checkbox" onchange="toggleItem(this)">
+          <span class="q-text">هل تعتقد ممكن شركة تقدر تتوقع وش يدور ببال الشخص قبل ينطق به؟ وكيف يسوونها؟</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- المحور 4: التفسيرات الخمسة الشائعة -->
+    <div class="section-card">
+      <div class="section-title">⚖️ خامساً: طرح التفسيرات الخمسة وموقفه منها (10 دقائق)</div>
+      <div class="section-tag">صيغة موحدة: هل مقنع وتتفق معه؟ أو مستبعد وما يدخل العقل؟</div>
+      <div class="q-list">
+        <label class="q-item">
+          <input type="checkbox" class="q-checkbox" onchange="toggleItem(this)">
+          <span class="q-text"><strong>1. التنصت بالمايكروفون:</strong> التطبيقات تسمع السوالف والمحيط وتلتقطه.. مقنع ولا مستبعد؟</span>
+        </label>
+        <label class="q-item">
+          <input type="checkbox" class="q-checkbox" onchange="toggleItem(this)">
+          <span class="q-text"><strong>2. تحليل البيانات والسلوك الرقمي:</strong> الذكاء الاصطناعي يربط وقتك واهتماماتك ويتوقع فكرتك.. مقنع ولا مستبعد؟</span>
+        </label>
+        <label class="q-item">
+          <input type="checkbox" class="q-checkbox" onchange="toggleItem(this)">
+          <span class="q-text"><strong>3. بحث الأهل أو الأصحاب اللي حولك:</strong> أحد بالبيت أو معك بالشبكة بحث عن الموضوع فطلع لك.. مقنع ولا مستبعد؟</span>
+        </label>
+        <label class="q-item">
+          <input type="checkbox" class="q-checkbox" onchange="toggleItem(this)">
+          <span class="q-text"><strong>4. صدفة وتزامن انتباه:</strong> الإعلان كان يطلع لك دايم بس ما انتبهت له إلا يوم فكرت فيه (زي اللي يبي يشتري سيارة).. مقنع ولا مستبعد؟</span>
+        </label>
+        <label class="q-item">
+          <input type="checkbox" class="q-checkbox" onchange="toggleItem(this)">
+          <span class="q-text"><strong>5. قراءة أفكار وتوافق أرواح وقدر:</strong> شيء غير مفسر علمياً وتخاطر.. مقنع ولا مستبعد؟</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- المحور 5: المشاعر وردود الفعل وتغيير السلوك والختام -->
+    <div class="section-card">
+      <div class="section-title">🛡️ سادساً: الأثر النفسي والسلوك الفعلي والختام (7 - 10 دقائق)</div>
+      <div class="section-tag">استكشاف ما إذا كان الإدراك قاده إلى تغيير سلوكه على الهاتف أم استسلام</div>
+      <div class="q-list">
+        <label class="q-item">
+          <input type="checkbox" class="q-checkbox" onchange="toggleItem(this)">
+          <span class="q-text">بصراحة، هالمواقف خلتك تحس بريبة، قلق، أو خوف من الجوال والتطبيقات؟</span>
+        </label>
+        <label class="q-item">
+          <input type="checkbox" class="q-checkbox" onchange="toggleItem(this)">
+          <span class="q-text">هل أثرت هالمواقف على ثقتك بالشركات التقنية؟</span>
+        </label>
+        <label class="q-item">
+          <input type="checkbox" class="q-checkbox" onchange="toggleItem(this)">
+          <span class="q-text">هل غيرت أي إعدادات بجوالك بعدها؟ (قفلت أذونات المايك، حذفت تطبيقات، ألغيت التتبع الإعلاني؟)</span>
+        </label>
+        <label class="q-item">
+          <input type="checkbox" class="q-checkbox" onchange="toggleItem(this)">
+          <span class="q-text">هل صرت تبعد الجوال عنك إذا جيت تفكر أو تسولف بسالفة خاصة؟</span>
+        </label>
+        <label class="q-item">
+          <input type="checkbox" class="q-checkbox" onchange="toggleItem(this)">
+          <span class="q-text">إذا ما غيرت شي.. وش السبب؟ تقبل وعادي، ولا تحس المحاولة ما منها فايدة؟</span>
+        </label>
+        <label class="q-item">
+          <input type="checkbox" class="q-checkbox" onchange="toggleItem(this)">
+          <span class="q-text">لو بتلخص علاقتك بجوالك وخصوصيتك في جملة وحدة.. وش تقول؟</span>
+        </label>
+        <label class="q-item">
+          <input type="checkbox" class="q-checkbox" onchange="toggleItem(this)">
+          <span class="q-text">فيه أي شيء أخير ودك تضيفه بهالموضوع وما سألتك عنه؟</span>
+        </label>
+        <label class="q-item" style="border-color: var(--success);">
+          <input type="checkbox" class="q-checkbox" onchange="toggleItem(this)">
+          <span class="q-text" style="color:var(--success); font-weight:700;">الشكر والختام: بيض الله وجهك وما قصرت، أثريتنا بوقتك وإجاباتك الثمينة جداً والله يعطيك ألف عافية.</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- قسم البيانات الديموغرافية السريعة (في أسفل الصفحة فقط) -->
+    <div class="demographics-card" id="demographicsCard">
+      <div class="section-title" style="color: #fff; margin-bottom: 12px;">
+        📋 البيانات الديموغرافية السريعة (تحددها بلمسة وحدة بآخر الجلسة)
+      </div>
+
+      <div class="chips-group" data-label="طريقة الاستقطاب">
+        <span class="chips-label">طريقة الاستقطاب والوصول:</span>
+        <div class="chips-container">
+          <div class="chip" onclick="selectSingleChip(this)">مراسلة رقمية مباشرة</div>
+          <div class="chip" onclick="selectSingleChip(this)">تواصل شخصي مباشر</div>
+          <div class="chip" onclick="selectSingleChip(this)">ترشيح وإحالة (صديق)</div>
+          <div class="chip" onclick="selectSingleChip(this)">دعوة عامة وإعلان</div>
+        </div>
+      </div>
+
+      <div class="chips-group" data-label="الجنس">
+        <span class="chips-label">الجنس:</span>
+        <div class="chips-container">
+          <div class="chip" onclick="selectSingleChip(this)">ذكر</div>
+          <div class="chip" onclick="selectSingleChip(this)">أنثى</div>
+        </div>
+      </div>
+
+      <div class="chips-group" data-label="الفئة العمرية">
+        <span class="chips-label">الفئة العمرية:</span>
+        <div class="chips-container">
+          <div class="chip" onclick="selectSingleChip(this)">&lt; 25 سنة</div>
+          <div class="chip" onclick="selectSingleChip(this)">25 - 40 سنة</div>
+          <div class="chip" onclick="selectSingleChip(this)">&gt; 40 سنة</div>
+        </div>
+      </div>
+
+      <div class="chips-group" data-label="المستوى التعليمي">
+        <span class="chips-label">المستوى التعليمي:</span>
+        <div class="chips-container">
+          <div class="chip" onclick="selectSingleChip(this)">ثانوي فأقل</div>
+          <div class="chip" onclick="selectSingleChip(this)">جامعي</div>
+          <div class="chip" onclick="selectSingleChip(this)">دراسات عليا</div>
+        </div>
+      </div>
+
+      <div class="chips-group" data-label="نظام الهاتف">
+        <span class="chips-label">نظام الهاتف المستخدم:</span>
+        <div class="chips-container">
+          <div class="chip" onclick="selectSingleChip(this)">iPhone (iOS)</div>
+          <div class="chip" onclick="selectSingleChip(this)">Android</div>
+        </div>
+      </div>
+
+      <div class="chips-group" data-label="التفسير المرجح">
+        <span class="chips-label">التفسير الأقرب للمشارك (بناءً على كلامه):</span>
+        <div class="chips-container">
+          <div class="chip" onclick="selectSingleChip(this)">🎙️ مايك/تجسس</div>
+          <div class="chip" onclick="selectSingleChip(this)">📊 تحليل بيانات وسلوك</div>
+          <div class="chip" onclick="selectSingleChip(this)">🎲 صدفة وانتباه</div>
+          <div class="chip" onclick="selectSingleChip(this)">👥 بحث اللي حوله</div>
+          <div class="chip" onclick="selectSingleChip(this)">🔮 خوارق/تخاطر</div>
+          <div class="chip" onclick="selectSingleChip(this)">🤷 متردد ومحتار</div>
+        </div>
+      </div>
+
+      <!-- أزرار حفظ البيانات الديموغرافية فقط -->
+      <div class="demo-actions">
+        <button class="btn-save-demo" onclick="copyDemographicsOnly()">
+          📋 نسخ البيانات الديموغرافية فقط
+        </button>
+        <button class="btn-save-demo" onclick="downloadDemographicsOnly()">
+          💾 تحميل البيانات الديموغرافية (TXT)
+        </button>
+      </div>
+
+      <button class="finish-btn" onclick="finishInterview()">إنهاء المقابلة وحفظ التقدم الشامل ✓</button>
+    </div>
+
+  </main>
+
+  <script>
+    // تفعيل التشيك بوكس وشطب السؤال المنجز
+    function toggleItem(checkbox) {
+      const parent = checkbox.closest('.q-item');
+      if (checkbox.checked) {
+        parent.classList.add('checked-done');
+      } else {
+        parent.classList.remove('checked-done');
+      }
+      updateProgress();
+    }
+
+    // تحديث نسبة الإنجاز
+    function updateProgress() {
+      const allBoxes = document.querySelectorAll('.q-checkbox');
+      const checkedBoxes = document.querySelectorAll('.q-checkbox:checked');
+      document.getElementById('progressCount').innerText = `${checkedBoxes.length} / ${allBoxes.length}`;
+    }
+
+    // اختيار الرقائق بنقرة واحدة (Single Select)
+    function selectSingleChip(el) {
+      const parent = el.parentElement;
+      parent.querySelectorAll('.chip').forEach(c => c.classList.remove('selected'));
+      el.classList.add('selected');
+      saveDemoDataLocally();
+    }
+
+    // استخراج نص البيانات الديموغرافية فقط
+    function getDemographicsText() {
+      const groups = document.querySelectorAll('#demographicsCard .chips-group');
+      let text = `=== البيانات الديموغرافية للمشارك ===\n`;
+      text += `• تاريخ التسجيل: ${new Date().toLocaleString('ar-SA')}\n`;
+      text += `• مدة المكالمة المسجلة: ${document.getElementById('callTimer').innerText}\n`;
+      text += `--------------------------------------\n`;
+      
+      groups.forEach(g => {
+        const label = g.getAttribute('data-label') || g.querySelector('.chips-label').innerText.replace(':', '');
+        const selected = g.querySelector('.chip.selected');
+        const val = selected ? selected.innerText.trim() : 'غير محدد';
+        text += `• ${label}: ${val}\n`;
+      });
+      
+      text += `======================================`;
+      return text;
+    }
+
+    // نسخ البيانات الديموغرافية فقط
+    function copyDemographicsOnly() {
+      const text = getDemographicsText();
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => {
+          alert('تم نسخ البيانات الديموغرافية فقط بنجاح!');
+        }).catch(() => fallbackCopyDemo(text));
+      } else {
+        fallbackCopyDemo(text);
+      }
+    }
+
+    function fallbackCopyDemo(text) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      alert('تم نسخ البيانات الديموغرافية فقط بنجاح!');
+    }
+
+    // تحميل البيانات الديموغرافية فقط كملف TXT
+    function downloadDemographicsOnly() {
+      const text = getDemographicsText();
+      const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      const timestamp = new Date().toISOString().slice(0, 10);
+      a.download = `بيانات_ديموغرافية_${timestamp}.txt`;
+      a.click();
+    }
+
+    // حفظ في الذاكرة المحلية للمتصفح
+    function saveDemoDataLocally() {
+      const selectedChips = [];
+      document.querySelectorAll('#demographicsCard .chip.selected').forEach(c => {
+        selectedChips.push(c.innerText.trim());
+      });
+      localStorage.setItem('saved_demographics_chips', JSON.stringify(selectedChips));
+    }
+
+    // استعادة الاختيارات إن وُجدت
+    window.addEventListener('DOMContentLoaded', () => {
+      const saved = localStorage.getItem('saved_demographics_chips');
+      if (saved) {
+        try {
+          const list = JSON.parse(saved);
+          document.querySelectorAll('#demographicsCard .chip').forEach(c => {
+            if (list.includes(c.innerText.trim())) {
+              c.classList.add('selected');
+            }
+          });
+        } catch (e) {}
+      }
+    });
+
+    // العداد الزمني الميداني
+    let timerInterval = null;
+    let secondsElapsed = 0;
+
+    function toggleTimer() {
+      const btn = document.getElementById('toggleTimerBtn');
+      if (!timerInterval) {
+        timerInterval = setInterval(() => {
+          secondsElapsed++;
+          const m = String(Math.floor(secondsElapsed / 60)).padStart(2, '0');
+          const s = String(secondsElapsed % 60).padStart(2, '0');
+          document.getElementById('callTimer').innerText = `${m}:${s}`;
+        }, 1000);
+        btn.innerText = 'إيقاف';
+        btn.style.background = '#ef4444';
+      } else {
+        clearInterval(timerInterval);
+        timerInterval = null;
+        btn.innerText = 'استئناف';
+        btn.style.background = '#123d32';
+      }
+    }
+
+    function resetTimer() {
+      clearInterval(timerInterval);
+      timerInterval = null;
+      secondsElapsed = 0;
+      document.getElementById('callTimer').innerText = '00:00';
+      const btn = document.getElementById('toggleTimerBtn');
+      btn.innerText = 'ابدأ';
+      btn.style.background = '#123d32';
+    }
+
+    function finishInterview() {
+      copyDemographicsOnly();
+      alert('تم إنهاء المقابلة ونسخ البيانات الديموغرافية بنجاح.');
+    }
+  </script>
+</body>
+</html>
